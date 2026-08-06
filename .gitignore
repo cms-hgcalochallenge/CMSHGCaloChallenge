@@ -15,6 +15,7 @@ profiling_plots/
 eval_results_all/**/*.hdf5
 eval_results_all/**/*.png
 eval_results_all/**/*.pdf
+eval_results_all/**/classifier.pt
 # Ignore raw feature .npz files but keep hist/*.npz (needed by plot_summary.py)
 eval_results_all/**/*.npz
 !eval_results_all/**/hist/*.npz

@@ -3,6 +3,7 @@
 
 import json
 import re
+import statistics
 from pathlib import Path
 
 REPO        = Path(__file__).parent
@@ -27,13 +28,42 @@ DATASETS = ["Photon_E5", "Photon_E50", "Photon_E500", "Photon_LogUniform",
             "Pion_E5",   "Pion_E50",   "Pion_E500",   "Pion_LogUniform"]
 
 
+def resolve_dirname(dirnames: list, dataset: str) -> str:
+    """Return the first dirname among dirnames with a metrics.txt for this dataset."""
+    for dirname in dirnames:
+        if (RESULTS_ALL / dirname / dataset / "metrics.txt").exists():
+            return dirname
+    return dirnames[0]
+
+
 def metrics_path(dirnames: list, dataset: str) -> Path:
     """Return the first existing metrics.txt among dirnames for this dataset."""
-    for dirname in dirnames:
-        p = RESULTS_ALL / dirname / dataset / "metrics.txt"
-        if p.exists():
-            return p
-    return RESULTS_ALL / dirnames[0] / dataset / "metrics.txt"
+    return RESULTS_ALL / resolve_dirname(dirnames, dataset) / dataset / "metrics.txt"
+
+
+def collect_seed_metrics(dirnames: list, dataset: str) -> list:
+    """Parse metrics.txt from each classifier-reseed run under cls_seeds/seed_*/
+    (see condor/submit_cls_seed_grid.sub), used to estimate AUC/OOD-fraction
+    run-to-run variation from the classifier's random initialization."""
+    seed_dir = RESULTS_ALL / resolve_dirname(dirnames, dataset) / dataset / "cls_seeds"
+    samples = []
+    if seed_dir.is_dir():
+        for seed_path in sorted(seed_dir.glob("seed_*/metrics.txt")):
+            sm = parse_metrics(seed_path)
+            if sm:
+                samples.append(sm)
+    return samples
+
+
+def add_seed_error_bars(m: dict, dirnames: list, dataset: str) -> None:
+    """Pool the base (seed=123) run with any classifier-reseed runs and attach
+    <metric>_err (sample std-dev across seeds) / <metric>_n (pool size) to m."""
+    samples = [m] + collect_seed_metrics(dirnames, dataset)
+    for key in ("AUC", "OOD_frac"):
+        vals = [s[key] for s in samples if key in s]
+        if len(vals) >= 2:
+            m[f"{key}_err"] = statistics.stdev(vals)
+            m[f"{key}_n"] = len(vals)
 
 
 def parse_metrics(path: Path) -> dict:
@@ -70,6 +100,26 @@ def parse_metrics(path: Path) -> dict:
         if m:
             result["KPD"] = float(m.group(1))
             result["KPD_err"] = float(m.group(2))
+            continue
+        # "OOD fraction (combined / gen / geant): X / Y / Z"
+        m = re.match(r"OOD fraction \(combined / gen / geant\):\s*([\d.e+\-]+)\s*/\s*([\d.e+\-]+)\s*/\s*([\d.e+\-]+)", line)
+        if m:
+            result["OOD_frac"] = float(m.group(1))
+            result["OOD_frac_gen"] = float(m.group(2))
+            result["OOD_frac_geant"] = float(m.group(3))
+            continue
+        # "OOD test set size (combined / gen / geant): N / N / N"
+        m = re.match(r"OOD test set size \(combined / gen / geant\):\s*(\d+)\s*/\s*(\d+)\s*/\s*(\d+)", line)
+        if m:
+            result["OOD_n"] = int(m.group(1))
+            result["OOD_n_gen"] = int(m.group(2))
+            result["OOD_n_geant"] = int(m.group(3))
+            continue
+        # "Reweighting efficiency (n_eff/n, gen->geant): X" (X may be "nan"
+        # when the OOD-fraction guard kicks in, i.e. near-total separation)
+        m = re.match(r"Reweighting efficiency \(n_eff/n, gen->geant\):\s*(nan|[\d.e+\-]+)", line)
+        if m and m.group(1) != "nan":
+            result["ReweightEff"] = float(m.group(1))
     return result
 
 
@@ -80,6 +130,23 @@ def _bf(s):
 def _fmt_sep(v):
     """Format sep/KS value in units of 1e-3, 2 decimal places."""
     return f"{v * 1e3:.2f}"
+
+
+def _fmt_ood(frac, n):
+    """Format an OOD fraction as a plain 0-1 number, e.g. "0.22".
+
+    If zero OOD events were actually observed, a classifier test set of
+    finite size n has no power to distinguish "truly zero" from some small
+    nonzero rate -- a single outlier could exist and still not show up.
+    Report a flat "<1e-4" sensitivity floor instead of asserting 0 (test
+    sets here run ~1e4-2e5 events, so 1e-4 is the right order of magnitude;
+    exact precision isn't the point of this note).
+    """
+    if frac is None:
+        return "--"
+    if n and round(frac * n) == 0:
+        return "<1e-4"
+    return f"{frac:.2f}"
 
 
 def _fmt_fpd(v, e):
@@ -134,7 +201,7 @@ def print_latex_tables(rows):
         print(f"\n% Dataset: {dataset}")
         print(f"\\begin{{tabular}}{{{col_spec}}}")
         cat_heads = " & ".join(lat_cat_labels.get(cat, cat) for cat in lat_cats)
-        print(f"   Model & \\multicolumn{{{ncats}}}{{c}}{{Sep. Power / KS $(\\times10^{{-3}})$}} & AUC & FPD & KPD \\\\")
+        print(f"   Model & \\multicolumn{{{ncats}}}{{c}}{{Sep. Power / KS $(\\times10^{{-3}})$}} & AUC (OOD) & FPD & KPD \\\\")
         print(f"         & {cat_heads} & & $(\\times10^{{-3}})$ & $(\\times10^{{-3}})$ \\\\")
         print("   \\hline")
 
@@ -169,12 +236,26 @@ def print_latex_tables(rows):
 
             is_ref = model in REFERENCE_MODELS
 
-            # AUC
+            # AUC (with OOD fraction sharing the same cell)
             auc = m.get("AUC")
+            auc_err = m.get("AUC_err")
+            ood = m.get("OOD_frac")
+            ood_err = m.get("OOD_frac_err")
             if auc is not None:
-                auc_s = f"{auc:.2f}"
+                auc_s = f"{auc:.3f}"
+                if auc_err is not None:
+                    auc_s += f" $\\pm$ {auc_err:.3f}"
                 if not is_ref and best_auc_dist is not None and abs(abs(auc - 0.5) - best_auc_dist) < 1e-6:
                     auc_s = _bf(auc_s)
+                if ood is not None:
+                    ood_n = m.get("OOD_n")
+                    if ood_n and round(ood * ood_n) == 0:
+                        ood_s = "$<10^{-4}$"
+                    else:
+                        ood_s = f"{ood * 100:.0f}\\%"
+                        if ood_err is not None:
+                            ood_s += f" $\\pm$ {ood_err * 100:.0f}\\%"
+                    auc_s += f" ({ood_s})"
             else:
                 auc_s = "--"
             cells.append(auc_s)
@@ -226,6 +307,7 @@ def main():
         for dataset in DATASETS:
             m = parse_metrics(metrics_path(dirnames, dataset))
             if m:
+                add_seed_error_bars(m, dirnames, dataset)
                 rows.append((display_name, dataset, m))
 
     if not rows:
@@ -271,7 +353,8 @@ def main():
         print("=" * 90)
         print("  Full Metrics  (from eval_results_all)")
         print("=" * 90)
-        header2 = f"{'Model':<16} {'Dataset':<22} {'N_showers':>10} {'KS_all':>10} {'AUC':>8} {'FPD (1e-3)':>14} {'KPD (1e-3)':>14}"
+        header2 = (f"{'Model':<16} {'Dataset':<22} {'N_showers':>10} {'KS_all':>10} {'AUC':>16} "
+                   f"{'FPD (1e-3)':>14} {'KPD (1e-3)':>14} {'OOD(all/gen/g4)':>28} {'ReweightEff':>12}")
         print(header2)
         print("-" * len(header2))
         prev_model = None
@@ -284,13 +367,29 @@ def main():
             auc   = m.get("AUC")
             fpd   = m.get("FPD");  fpd_e = m.get("FPD_err")
             kpd   = m.get("KPD");  kpd_e = m.get("KPD_err")
+            ood, ood_gen, ood_g4 = m.get("OOD_frac"), m.get("OOD_frac_gen"), m.get("OOD_frac_geant")
+            auc_err = m.get("AUC_err")
+            ood_err = m.get("OOD_frac_err")
+            rw_eff = m.get("ReweightEff")
 
             n_sh_str = f"{n_sh:>10d}"          if n_sh  is not None else f"{'--':>10}"
             ks_str   = f"{ks_all:>10.4f}"       if ks_all is not None else f"{'--':>10}"
-            auc_str  = f"{auc:>8.2f}"            if auc   is not None else f"{'--':>8}"
+            if auc is not None:
+                auc_str = f"{auc:>7.3f}±{auc_err:<6.3f}" if auc_err is not None else f"{auc:>7.3f}      "
+                auc_str = f"{auc_str:>16}"
+            else:
+                auc_str = f"{'--':>16}"
             fpd_str  = f"{fpd:>7.1f}±{fpd_e:<5.1f}"     if fpd is not None else f"{'--':>14}"
             kpd_str  = f"{kpd:>7.4f}±{kpd_e:<5.4f}"     if kpd is not None else f"{'--':>14}"
-            print(f"{model:<16} {dataset:<22}{n_sh_str}{ks_str}{auc_str} {fpd_str} {kpd_str}")
+            if ood is not None:
+                ood_disp = _fmt_ood(ood, m.get("OOD_n"))
+                if ood_err is not None and not ood_disp.startswith("<"):
+                    ood_disp += f"±{ood_err:.2f}"
+                ood_str = f"{ood_disp} | {_fmt_ood(ood_gen, m.get('OOD_n_gen'))} | {_fmt_ood(ood_g4, m.get('OOD_n_geant'))}"
+            else:
+                ood_str = "--"
+            rw_str   = f"{rw_eff:.4f}"          if rw_eff is not None else "--"
+            print(f"{model:<16} {dataset:<22}{n_sh_str}{ks_str}{auc_str} {fpd_str} {kpd_str} {ood_str:>28} {rw_str:>12}")
 
     # --- LaTeX tables (one per dataset) ---
     print()

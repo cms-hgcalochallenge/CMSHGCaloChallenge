@@ -413,12 +413,15 @@ def collect_timing(data, throughput=False, remove_first_batch=False) -> list[dic
         else: 
             point_timing = np.array([value for key, value in point['timing'].items() if "sample_batch" in key and key != "sample_batch_0"])
 
+        # Each sample_batch_N call produces point["batch"] showers, not
+        # point["samples"] (the trial total across all calls) — divide by
+        # the former to get a genuine per-shower time.
         if throughput:
-            timing_mean = np.mean(point["samples"]/point_timing)
-            timing_std = np.std(point['samples']/point_timing)
-        else: 
-            timing_mean = np.mean(point_timing/point["samples"])
-            timing_std = np.std(point_timing/point['samples'])
+            timing_mean = np.mean(point["batch"]/point_timing)
+            timing_std = np.std(point['batch']/point_timing)
+        else:
+            timing_mean = np.mean(point_timing/point["batch"])
+            timing_std = np.std(point_timing/point['batch'])
 
         point_timing = [value for key, value in point['timing'].items() if "sample_batch" in key]
         profile = {

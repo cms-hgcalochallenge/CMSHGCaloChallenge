@@ -48,8 +48,11 @@ def collect_timing(data: list, batch_size: int, remove_first_batch: bool = False
 
         model, particle = _parse_name(pt["name"])
         key = (model, particle, pt["energy"])
-        out[key] = (float(np.mean(times / pt["samples"])),
-                    float(np.std(times  / pt["samples"])))
+        # Each sample_batch_N call produces `batch_size` showers, not
+        # pt["samples"] (the trial total across all calls) — divide by the
+        # former to get a genuine per-shower time.
+        out[key] = (float(np.mean(times / batch_size)),
+                    float(np.std(times  / batch_size)))
     return out
 
 

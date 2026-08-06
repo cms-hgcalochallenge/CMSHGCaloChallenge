@@ -136,7 +136,7 @@ def train_and_evaluate_cls(model, data_train, data_test, optim, arg):
         for i in range(arg.cls_n_epochs):
             train_cls(model, data_train, optim, i, arg)
             with torch.no_grad():
-                eval_acc, _ = evaluate_cls(model, data_test, arg)
+                eval_acc, _, _, _ = evaluate_cls(model, data_test, arg)
             if eval_acc > best_eval_acc:
                 best_eval_acc = eval_acc
                 arg.best_epoch = i+1
@@ -189,7 +189,15 @@ def train_cls(model, data_train, optim, epoch, arg):
         print("Nans")
 
 def evaluate_cls(model, data_test, arg, final_eval=False, calibration_data=None):
-    """ evaluate on test set """
+    """ evaluate on test set.
+
+    Returns (eval_acc, eval_auc, scores, labels), where `scores` is the
+    continuous predicted probability per event (calibrated when
+    final_eval=True) and `labels` is the true 0/1 array. Keeping the
+    continuous probability (rather than rounding to 0/1 before scoring)
+    is required for a true ROC AUC and for any downstream use of the
+    score as a density-ratio estimate (e.g. OOD fraction, reweighting).
+    """
     model.eval()
     for j, data_batch in enumerate(data_test):
         if arg.save_mem:
@@ -207,28 +215,30 @@ def evaluate_cls(model, data_test, arg, final_eval=False, calibration_data=None)
             result_true = torch.cat((result_true, target), 0)
             result_pred = torch.cat((result_pred, pred), 0)
     BCE = torch.nn.BCEWithLogitsLoss()(result_pred, result_true)
-    result_pred = torch.round(torch.sigmoid(result_pred)).cpu().numpy()
+    prob_pred = torch.sigmoid(result_pred).cpu().numpy()
     result_true = result_true.cpu().numpy().astype(np.float32)
-    result_pred = np.clip(np.round(result_pred), 0., 1.0)
-    #print(np.amin(result_pred), np.amax(result_pred), np.sum(np.isnan(result_pred)))
+    hard_pred = np.clip(np.round(prob_pred), 0., 1.0)
     try:
-        eval_acc = accuracy_score(result_true, result_pred)
+        eval_acc = accuracy_score(result_true, hard_pred)
     except:
         print("Nans")
-        result_pred[np.isnan(result_pred)] = 0.5
-        eval_acc = accuracy_score(result_true, result_pred)
+        prob_pred[np.isnan(prob_pred)] = 0.5
+        hard_pred = np.clip(np.round(prob_pred), 0., 1.0)
+        eval_acc = accuracy_score(result_true, hard_pred)
     print("Accuracy on test set is", eval_acc)
-    eval_auc = roc_auc_score(result_true, result_pred)
+    eval_auc = roc_auc_score(result_true, prob_pred)
     print("AUC on test set is", eval_auc)
+    scores = prob_pred
     if final_eval:
-        prob_true, prob_pred = calibration_curve(result_true, result_pred, n_bins=10)
-        print("unrescaled calibration curve:", prob_true, prob_pred)
+        prob_true, prob_pred_curve = calibration_curve(result_true, prob_pred, n_bins=10)
+        print("unrescaled calibration curve:", prob_true, prob_pred_curve)
         calibrator = calibrate_classifier(model, calibration_data, arg)
-        rescaled_pred = calibrator.predict(result_pred)
+        rescaled_pred = calibrator.predict(prob_pred)
         eval_acc = accuracy_score(result_true, np.clip(np.round(rescaled_pred), 0., 1.0))
         print("Rescaled accuracy is", eval_acc)
         eval_auc = roc_auc_score(result_true, rescaled_pred)
-    return eval_acc, eval_auc 
+        scores = rescaled_pred
+    return eval_acc, eval_auc, scores, result_true
 
 def calibrate_classifier(model, calibration_data, arg):
     """ reads in calibration data and performs a calibration with isotonic regression"""
@@ -799,6 +809,19 @@ def compute_metrics(flags):
         feats_cls_geant = truncate_layer_features(feats_cls_geant, n_layers, max_layer=max_layer_eval)
 
     if(do_classifier):
+        # Rerunning classifier-only (mode=cls) against an existing metrics.txt
+        # (written by a prior mode=all/hist run) would otherwise just append
+        # another set of classifier lines below the stale ones. Strip any
+        # previous classifier-derived lines first so metrics.txt stays
+        # single-valued per metric; sep-power/FPD lines are untouched.
+        metrics_path = os.path.join(flags.plot_folder, 'metrics.txt')
+        if os.path.exists(metrics_path):
+            stale_prefixes = ("Result of classifier test", "OOD fraction", "OOD test set size", "Reweighting efficiency")
+            with open(metrics_path) as f:
+                kept_lines = [line for line in f if not line.startswith(stale_prefixes)]
+            with open(metrics_path, 'w') as f:
+                f.writelines(kept_lines)
+
         labels_diffu = np.ones((feats_cls_gen.shape[0], 1), dtype=np.float32)
         labels_geant = np.zeros((feats_cls_geant.shape[0], 1), dtype=np.float32)
 
@@ -849,15 +872,83 @@ def compute_metrics(flags):
 
             with torch.no_grad():
                 print("Now looking at independent dataset:")
-                eval_acc, eval_auc = evaluate_cls(classifier, test_dataloader, flags,
-                                                            final_eval=True,
-                                                            calibration_data=val_dataloader)
+                eval_acc, eval_auc, test_scores, test_labels = evaluate_cls(
+                    classifier, test_dataloader, flags,
+                    final_eval=True,
+                    calibration_data=val_dataloader)
+
+            # OOD fraction: events the classifier separates with near-certainty
+            # (predicted prob very close to 0 or 1), combined and per true class.
+            OOD_LO, OOD_HI = 0.01, 0.99
+            is_ood = (test_scores < OOD_LO) | (test_scores > OOD_HI)
+            is_gen = test_labels == 1
+            is_geant = test_labels == 0
+            ood_frac_all = is_ood.mean()
+            ood_frac_gen = is_ood[is_gen].mean() if is_gen.any() else float('nan')
+            ood_frac_geant = is_ood[is_geant].mean() if is_geant.any() else float('nan')
+            # Test-set sizes behind each fraction above, so a reported 0.0
+            # can be shown as "< 1/n_test" downstream (print_summary.py) --
+            # with a finite test set we have no power to detect an OOD rate
+            # below one event, so an observed zero isn't really "zero".
+            n_test_all, n_test_gen, n_test_geant = len(test_scores), int(is_gen.sum()), int(is_geant.sum())
+
+            # Reweighting efficiency: Kish's effective sample size for
+            # importance weights w = (1-p)/p that would reweight generated
+            # events to match Geant4. Probabilities are clipped away from
+            # 0/1 to keep weights finite.
+            REWEIGHT_EPS = 1e-3
+            # Above this OOD fraction the classifier separates gen events
+            # almost perfectly, so the density-overlap premise the
+            # reweighting trick relies on breaks down. Kish's ESS only
+            # measures relative weight variance: if calibration collapses
+            # to a constant near the eps floor (common at near-total
+            # separation), every weight is identical and n_eff/n reports
+            # ~1.0 even though the weights themselves are meaningless.
+            REWEIGHT_OOD_THRESHOLD = 0.98
+            if ood_frac_gen > REWEIGHT_OOD_THRESHOLD:
+                reweight_efficiency = float('nan')
+            else:
+                p_gen = np.clip(test_scores[is_gen], REWEIGHT_EPS, 1. - REWEIGHT_EPS)
+                weights = (1. - p_gen) / p_gen
+                n_eff = weights.sum()**2 / (weights**2).sum()
+                reweight_efficiency = n_eff / len(weights)
+
             cls_string = "Result of classifier test (AUC): %.4f \n" % eval_auc
+            cls_string += "OOD fraction (combined / gen / geant): %.4f / %.4f / %.4f \n" % (
+                ood_frac_all, ood_frac_gen, ood_frac_geant)
+            cls_string += "OOD test set size (combined / gen / geant): %d / %d / %d \n" % (
+                n_test_all, n_test_gen, n_test_geant)
+            cls_string += "Reweighting efficiency (n_eff/n, gen->geant): %.4f \n" % reweight_efficiency
             print(cls_string)
             with open(os.path.join(flags.plot_folder, 'metrics.txt'), 'a') as f:
                 f.write(cls_string)
 
+            if flags.save_classifier:
+                torch.save({
+                    'model_state_dict': classifier.state_dict(),
+                    'scaler': scaler,
+                    'input_dim': input_dim,
+                    'num_layer': cls_num_layer,
+                    'num_hidden': cls_num_hidden,
+                    'dropout': dropout,
+                }, os.path.join(flags.plot_folder, 'classifier.pt'))
+                np.savez(os.path.join(flags.plot_folder, 'classifier_test_scores.npz'),
+                         scores=test_scores, labels=test_labels)
+                print("Saved classifier checkpoint and test scores in %s" % flags.plot_folder)
+
     if(do_fpd):
+        # Rerunning fpd-only (mode=fpd) against an existing metrics.txt would
+        # otherwise just append another FPD/KPD pair below the stale ones;
+        # strip any previous fpd-derived lines first, mirroring the
+        # classifier block above.
+        metrics_path = os.path.join(flags.plot_folder, 'metrics.txt')
+        if os.path.exists(metrics_path):
+            stale_prefixes = ("FPD", "KPD")
+            with open(metrics_path) as f:
+                kept_lines = [line for line in f if not line.startswith(stale_prefixes)]
+            with open(metrics_path, 'w') as f:
+                f.writelines(kept_lines)
+
         #Larger number of samples than default (50k) found to be more stable, reduced unc
         max_samples = 200000
         if(flags.fpd_trim > 0):
@@ -904,6 +995,8 @@ if(__name__ == "__main__"):
     parser.add_argument('--cls_n_epochs', default=50, type=int, help='Num classifier epochs')
     parser.add_argument('--cls_batch_size', default=256, type=int, help='classifier batch size')
     parser.add_argument('--save_mem', action='store_true', default=False,help='Limit GPU memory for classifier')
+    parser.add_argument('--no_save_classifier', action='store_false', dest='save_classifier', default=True,
+                        help='Skip saving classifier.pt / classifier_test_scores.npz')
 
     parser.add_argument('--shuffle_labels', default=False, action='store_true', help='Randomly permute labels (for geant-geant bootstraps)')
 

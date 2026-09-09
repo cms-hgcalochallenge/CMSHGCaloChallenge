@@ -37,6 +37,10 @@ Key arguments:
 - `-p` — output directory (metrics.txt, hist/*.npz, hist/*.png written here)
 - `-d` — directory containing Geant4 reference showers
 - `--mode` — `hist`, `cls`, `fpd`, or `all` (default: `all`)
+- `--fpd_trim` — NLL-trim fraction for FPD (default: `0.01`, i.e. 1%). Vanilla (untrimmed) FPD
+  has very large run-to-run variance on HGCal showers; trimming the top-Mahalanobis events
+  before the Chong-Forsyth extrapolation (see `fpd_trim.py`) stabilizes both the central value
+  and its uncertainty. Pass `--fpd_trim 0` to get vanilla jetnet FPD instead.
 - `--plot` — save per-feature histogram plots
 - `--EMin` — minimum voxel energy threshold (default: 1e-5)
 

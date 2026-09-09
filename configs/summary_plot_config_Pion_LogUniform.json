@@ -1,6 +1,6 @@
 {
   "output_dir": "../plots/summary/Pion_LogUniform",
-  "data_label": "Pion, LogUniform",
+  "data_label": "Pion, 1-1000 GeV",
   "layer_filter": 30,
   "geom_file": "../HGCalShowers/geoms/HGCal_geo_2024_large.pkl",
   "models": [

@@ -1,6 +1,6 @@
 {
   "output_dir": "../plots/summary/Photon_LogUniform",
-  "data_label": "Photon, LogUniform",
+  "data_label": "Photon, 1-1000 GeV",
   "layer_filter": 10,
   "geom_file": "../HGCalShowers/geoms/HGCal_geo_2024.pkl",
   "models": [

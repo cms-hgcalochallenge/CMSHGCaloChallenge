@@ -1005,10 +1005,11 @@ if(__name__ == "__main__"):
     parser.add_argument('--reprocess', action='store_true', default=False,help='Recompute features for eval')
     parser.add_argument('--no_occupancy', action='store_true', default=False,help='Dont include occupancy feature')
     parser.add_argument('-m', '--mode', default='all', help='Which eval metrics to run. Options : hist, cls, fpd, all (default)')
-    parser.add_argument('--fpd_trim', type=float, default=0.0,
-                        help="Optional NLL-trim fraction for FPD: drop the top-Mahalanobis fraction of events per batch "
+    parser.add_argument('--fpd_trim', type=float, default=0.01,
+                        help="NLL-trim fraction for FPD: drop the top-Mahalanobis fraction of events per batch "
                              "under each sample's own MLE Gaussian, then run jetnet's Chong-Forsyth 1/N extrapolation "
-                             "(see fpd_trim.py). Default 0 = vanilla jetnet FPD; e.g. 0.01 trims 1%%.")
+                             "(see fpd_trim.py). Default 0.01 (1%%) -- vanilla (untrimmed) jetnet FPD was found to have "
+                             "very large run-to-run variance on HGCal showers; set to 0 to get vanilla FPD instead.")
     parser.add_argument('--apply_layer_weights', action='store_true', default=True,
                         help='Apply per-layer weights loaded from JSON before feature extraction (default key: weightsPerLayer_V16). On by default.')
     parser.add_argument('--no_layer_weights', action='store_false', dest='apply_layer_weights',

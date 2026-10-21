@@ -675,7 +675,6 @@ def compute_metrics(flags):
             ks_sums[sum_key] += ks_metric
             sep_power_counts[sum_key] += 1
             sep_power_sums['all'] += sep_power
-            sep_power_sums['all'] += sep_power
             ks_sums['all'] += ks_metric
             sep_power_counts['all'] += 1
 

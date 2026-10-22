@@ -13,7 +13,7 @@
       "KS_Occupancy": 0.01805,
       "Sep_Occupancy": 0.00233,
       "KS_all": 0.02154,
-      "Sep_all": 0.001718,
+      "Sep_all": 0.0009509,
       "AUC": 0.9493,
       "OOD_frac": 0.2187,
       "OOD_frac_gen": 0.3835,
@@ -29,7 +29,8 @@
       "AUC_err": 0.0003669695718539516,
       "AUC_n": 6,
       "OOD_frac_err": 0.011691834757641767,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001718
     },
     "Photon_E50": {
       "n_showers": 991030,
@@ -44,7 +45,7 @@
       "KS_Occupancy": 0.04808,
       "Sep_Occupancy": 0.007822,
       "KS_all": 0.02294,
-      "Sep_all": 0.003578,
+      "Sep_all": 0.00186,
       "AUC": 0.9838,
       "OOD_frac": 0.5085,
       "OOD_frac_gen": 0.6428,
@@ -60,7 +61,8 @@
       "AUC_err": 0.00040331955899344975,
       "AUC_n": 6,
       "OOD_frac_err": 0.013262490967637498,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.003578
     },
     "Photon_E500": {
       "n_showers": 997907,
@@ -75,7 +77,7 @@
       "KS_Occupancy": 0.1518,
       "Sep_Occupancy": 0.07183,
       "KS_all": 0.04063,
-      "Sep_all": 0.02376,
+      "Sep_all": 0.01196,
       "AUC": 0.9999,
       "OOD_frac": 0.9813,
       "OOD_frac_gen": 0.9831,
@@ -90,7 +92,8 @@
       "AUC_err": 0.0,
       "AUC_n": 6,
       "OOD_frac_err": 0.001777263814594413,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.02376
     },
     "Photon_LogUniform": {
       "n_showers": 324047,
@@ -105,7 +108,7 @@
       "KS_Occupancy": 0.0224,
       "Sep_Occupancy": 0.006538,
       "KS_all": 0.01777,
-      "Sep_all": 0.002806,
+      "Sep_all": 0.00144,
       "AUC": 0.8516,
       "OOD_frac": 0.1597,
       "OOD_frac_gen": 0.1855,
@@ -121,7 +124,8 @@
       "AUC_err": 0.0013130118049735754,
       "AUC_n": 6,
       "OOD_frac_err": 0.0031335283627246732,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002806
     },
     "Pion_E5": {
       "n_showers": 997309,
@@ -136,7 +140,7 @@
       "KS_Occupancy": 0.03231,
       "Sep_Occupancy": 0.003744,
       "KS_all": 0.05283,
-      "Sep_all": 0.004755,
+      "Sep_all": 0.002673,
       "AUC": 0.9887,
       "OOD_frac": 0.5716,
       "OOD_frac_gen": 0.7001,
@@ -152,7 +156,8 @@
       "AUC_err": 0.0002786873995477249,
       "AUC_n": 6,
       "OOD_frac_err": 0.010802407139151935,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.004755
     },
     "Pion_E50": {
       "n_showers": 991278,
@@ -167,7 +172,7 @@
       "KS_Occupancy": 0.01636,
       "Sep_Occupancy": 0.001309,
       "KS_all": 0.03927,
-      "Sep_all": 0.001876,
+      "Sep_all": 0.001128,
       "AUC": 0.9885,
       "OOD_frac": 0.5885,
       "OOD_frac_gen": 0.7424,
@@ -183,7 +188,8 @@
       "AUC_err": 0.0002738612787526056,
       "AUC_n": 6,
       "OOD_frac_err": 0.015168476082542619,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001876
     },
     "Pion_E500": {
       "n_showers": 985162,
@@ -198,7 +204,7 @@
       "KS_Occupancy": 0.03969,
       "Sep_Occupancy": 0.008178,
       "KS_all": 0.03705,
-      "Sep_all": 0.004025,
+      "Sep_all": 0.002281,
       "AUC": 0.9951,
       "OOD_frac": 0.727,
       "OOD_frac_gen": 0.8238,
@@ -214,7 +220,8 @@
       "AUC_err": 0.00017224014243686842,
       "AUC_n": 6,
       "OOD_frac_err": 0.008227616098644058,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.004025
     },
     "Pion_LogUniform": {
       "n_showers": 293790,
@@ -229,7 +236,7 @@
       "KS_Occupancy": 0.01375,
       "Sep_Occupancy": 0.001896,
       "KS_all": 0.0336,
-      "Sep_all": 0.001628,
+      "Sep_all": 0.0008743,
       "AUC": 0.8511,
       "OOD_frac": 0.0739,
       "OOD_frac_gen": 0.1515,
@@ -245,7 +252,8 @@
       "AUC_err": 0.0023120697798004984,
       "AUC_n": 6,
       "OOD_frac_err": 0.0024800537628581077,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001628
     }
   },
   "HGCaloDream": {
@@ -262,7 +270,7 @@
       "KS_Occupancy": 0.006821,
       "Sep_Occupancy": 0.0002347,
       "KS_all": 0.006808,
-      "Sep_all": 0.000508,
+      "Sep_all": 0.0002845,
       "AUC": 0.6901,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -278,7 +286,8 @@
       "AUC_err": 0.0012143585412334509,
       "AUC_n": 6,
       "OOD_frac_err": 0.0006410928169929842,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.000508
     },
     "Photon_E50": {
       "n_showers": 1000000,
@@ -293,7 +302,7 @@
       "KS_Occupancy": 0.00659,
       "Sep_Occupancy": 0.0002541,
       "KS_all": 0.006248,
-      "Sep_all": 0.0004533,
+      "Sep_all": 0.0002587,
       "AUC": 0.6776,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -309,7 +318,8 @@
       "AUC_err": 0.001697939928265998,
       "AUC_n": 6,
       "OOD_frac_err": 0.0008921883209278184,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0004533
     },
     "Photon_E500": {
       "n_showers": 1000000,
@@ -324,7 +334,7 @@
       "KS_Occupancy": 0.006118,
       "Sep_Occupancy": 0.0002416,
       "KS_all": 0.01082,
-      "Sep_all": 0.001066,
+      "Sep_all": 0.0006227,
       "AUC": 0.9558,
       "OOD_frac": 0.2717,
       "OOD_frac_gen": 0.4668,
@@ -340,7 +350,8 @@
       "AUC_err": 0.00028577380332467264,
       "AUC_n": 6,
       "OOD_frac_err": 0.009648575024323544,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001066
     },
     "Photon_LogUniform": {
       "n_showers": 350000,
@@ -355,7 +366,7 @@
       "KS_Occupancy": 0.003461,
       "Sep_Occupancy": 0.0001015,
       "KS_all": 0.005015,
-      "Sep_all": 0.000325,
+      "Sep_all": 0.0001784,
       "AUC": 0.5862,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -371,7 +382,8 @@
       "AUC_err": 0.0013272779161376494,
       "AUC_n": 6,
       "OOD_frac_err": 0.0,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.000325
     },
     "Pion_E5": {
       "n_showers": 1054276,
@@ -386,7 +398,7 @@
       "KS_Occupancy": 0.06133,
       "Sep_Occupancy": 0.0101,
       "KS_all": 0.03683,
-      "Sep_all": 0.006658,
+      "Sep_all": 0.003418,
       "AUC": 0.9414,
       "OOD_frac": 0.2304,
       "OOD_frac_gen": 0.3726,
@@ -402,7 +414,8 @@
       "AUC_err": 0.00042268979957726536,
       "AUC_n": 6,
       "OOD_frac_err": 0.013381292912121761,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.006658
     },
     "Pion_E50": {
       "n_showers": 997010,
@@ -417,7 +430,7 @@
       "KS_Occupancy": 0.03757,
       "Sep_Occupancy": 0.003538,
       "KS_all": 0.01617,
-      "Sep_all": 0.001402,
+      "Sep_all": 0.0007468,
       "AUC": 0.9325,
       "OOD_frac": 0.1726,
       "OOD_frac_gen": 0.309,
@@ -433,7 +446,8 @@
       "AUC_err": 0.0005810909280540114,
       "AUC_n": 6,
       "OOD_frac_err": 0.005643285095285078,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001402
     },
     "Pion_E500": {
       "n_showers": 1000000,
@@ -448,7 +462,7 @@
       "KS_Occupancy": 0.03387,
       "Sep_Occupancy": 0.005786,
       "KS_all": 0.01604,
-      "Sep_all": 0.002161,
+      "Sep_all": 0.001172,
       "AUC": 0.9497,
       "OOD_frac": 0.2116,
       "OOD_frac_gen": 0.2449,
@@ -464,7 +478,8 @@
       "AUC_err": 0.00040373258476374027,
       "AUC_n": 6,
       "OOD_frac_err": 0.010620624589291664,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002161
     },
     "Pion_LogUniform": {
       "n_showers": 309196,
@@ -479,7 +494,7 @@
       "KS_Occupancy": 0.02007,
       "Sep_Occupancy": 0.001653,
       "KS_all": 0.01153,
-      "Sep_all": 0.0007875,
+      "Sep_all": 0.0004169,
       "AUC": 0.7124,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -495,7 +510,8 @@
       "AUC_err": 0.0020953917692562254,
       "AUC_n": 6,
       "OOD_frac_err": 0.001811537100549328,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0007875
     }
   },
   "HGCaloTrilogy": {
@@ -512,7 +528,7 @@
       "KS_Occupancy": 0.03665,
       "Sep_Occupancy": 0.004993,
       "KS_all": 0.01601,
-      "Sep_all": 0.002637,
+      "Sep_all": 0.001379,
       "AUC": 0.9153,
       "OOD_frac": 0.0835,
       "OOD_frac_gen": 0.005,
@@ -528,7 +544,8 @@
       "AUC_err": 0.003364173994707558,
       "AUC_n": 6,
       "OOD_frac_err": 0.04968286424915536,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002637
     },
     "Photon_E50": {
       "n_showers": 118404,
@@ -543,7 +560,7 @@
       "KS_Occupancy": 0.07892,
       "Sep_Occupancy": 0.01894,
       "KS_all": 0.02041,
-      "Sep_all": 0.006565,
+      "Sep_all": 0.003338,
       "AUC": 0.9918,
       "OOD_frac": 0.7994,
       "OOD_frac_gen": 0.4244,
@@ -559,7 +576,8 @@
       "AUC_err": 0.00026394443859773366,
       "AUC_n": 6,
       "OOD_frac_err": 0.019372970861486344,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.006565
     },
     "Photon_E500": {
       "n_showers": 98792,
@@ -574,7 +592,7 @@
       "KS_Occupancy": 0.1358,
       "Sep_Occupancy": 0.0469,
       "KS_all": 0.03043,
-      "Sep_all": 0.01545,
+      "Sep_all": 0.007772,
       "AUC": 0.9999,
       "OOD_frac": 0.9876,
       "OOD_frac_gen": 0.9468,
@@ -590,7 +608,8 @@
       "AUC_err": 7.527726527089981e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.0024119839689903965,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.01545
     },
     "Photon_LogUniform": {
       "n_showers": 154951,
@@ -605,7 +624,7 @@
       "KS_Occupancy": 0.01983,
       "Sep_Occupancy": 0.002102,
       "KS_all": 0.01054,
-      "Sep_all": 0.001313,
+      "Sep_all": 0.0006852,
       "AUC": 0.8465,
       "OOD_frac": 0.2149,
       "OOD_frac_gen": 0.2426,
@@ -621,7 +640,8 @@
       "AUC_err": 0.001971463077682795,
       "AUC_n": 6,
       "OOD_frac_err": 0.012881097261750123,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001313
     },
     "Pion_E5": {
       "n_showers": 119600,
@@ -636,7 +656,7 @@
       "KS_Occupancy": 0.02892,
       "Sep_Occupancy": 0.002839,
       "KS_all": 0.01276,
-      "Sep_all": 0.001119,
+      "Sep_all": 0.0005931,
       "AUC": 0.8615,
       "OOD_frac": 0.0385,
       "OOD_frac_gen": 0.002,
@@ -652,7 +672,8 @@
       "AUC_err": 0.00201196421439347,
       "AUC_n": 6,
       "OOD_frac_err": 0.03147905123517331,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.001119
     },
     "Pion_E50": {
       "n_showers": 119600,
@@ -667,7 +688,7 @@
       "KS_Occupancy": 0.04842,
       "Sep_Occupancy": 0.006874,
       "KS_all": 0.02121,
-      "Sep_all": 0.002249,
+      "Sep_all": 0.001165,
       "AUC": 0.9561,
       "OOD_frac": 0.4665,
       "OOD_frac_gen": 0.0179,
@@ -683,7 +704,8 @@
       "AUC_err": 0.0017971273373544236,
       "AUC_n": 6,
       "OOD_frac_err": 0.015645627717246324,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002249
     },
     "Pion_E500": {
       "n_showers": 96876,
@@ -698,7 +720,7 @@
       "KS_Occupancy": 0.0962,
       "Sep_Occupancy": 0.01862,
       "KS_all": 0.03662,
-      "Sep_all": 0.006146,
+      "Sep_all": 0.003166,
       "AUC": 0.9948,
       "OOD_frac": 0.872,
       "OOD_frac_gen": 0.5202,
@@ -714,7 +736,8 @@
       "AUC_err": 0.00035023801430838375,
       "AUC_n": 6,
       "OOD_frac_err": 0.006137100292483414,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.006146
     },
     "Pion_LogUniform": {
       "n_showers": 174930,
@@ -729,7 +752,7 @@
       "KS_Occupancy": 0.03128,
       "Sep_Occupancy": 0.001868,
       "KS_all": 0.01603,
-      "Sep_all": 0.0008879,
+      "Sep_all": 0.0004654,
       "AUC": 0.7583,
       "OOD_frac": 0.0858,
       "OOD_frac_gen": 0.1164,
@@ -745,7 +768,8 @@
       "AUC_err": 0.0019937402037377007,
       "AUC_n": 6,
       "OOD_frac_err": 0.008269381274718605,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0008879
     }
   },
   "GraphCNF": {
@@ -762,7 +786,7 @@
       "KS_Occupancy": 0.1483,
       "Sep_Occupancy": 0.07959,
       "KS_all": 0.1192,
-      "Sep_all": 0.1009,
+      "Sep_all": 0.05788,
       "AUC": 1.0,
       "OOD_frac": 0.9991,
       "OOD_frac_gen": 0.9992,
@@ -777,7 +801,8 @@
       "AUC_err": 4.0824829046381805e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.00025033311140688696,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.1009
     },
     "Photon_E50": {
       "n_showers": 990998,
@@ -792,7 +817,7 @@
       "KS_Occupancy": 0.2752,
       "Sep_Occupancy": 0.2053,
       "KS_all": 0.1701,
-      "Sep_all": 0.19,
+      "Sep_all": 0.1083,
       "AUC": 1.0,
       "OOD_frac": 1.0,
       "OOD_frac_gen": 1.0,
@@ -807,7 +832,8 @@
       "AUC_err": 0.0,
       "AUC_n": 6,
       "OOD_frac_err": 0.0,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.19
     },
     "Photon_E500": {
       "n_showers": 1000150,
@@ -822,7 +848,7 @@
       "KS_Occupancy": 0.4789,
       "Sep_Occupancy": 0.4159,
       "KS_all": 0.3008,
-      "Sep_all": 0.3973,
+      "Sep_all": 0.2279,
       "AUC": 1.0,
       "OOD_frac": 1.0,
       "OOD_frac_gen": 1.0,
@@ -837,7 +863,8 @@
       "AUC_err": 0.0,
       "AUC_n": 6,
       "OOD_frac_err": 0.0,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.3973
     },
     "Photon_LogUniform": {
       "n_showers": 304658,
@@ -852,7 +879,7 @@
       "KS_Occupancy": 0.0881,
       "Sep_Occupancy": 0.04115,
       "KS_all": 0.1241,
-      "Sep_all": 0.106,
+      "Sep_all": 0.0616,
       "AUC": 1.0,
       "OOD_frac": 0.9879,
       "OOD_frac_gen": 0.9893,
@@ -867,7 +894,8 @@
       "AUC_err": 5.1639777949426535e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.0024108089928486865,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.106
     },
     "Pion_E5": {
       "n_showers": 1000000,
@@ -882,7 +910,7 @@
       "KS_Occupancy": 0.1243,
       "Sep_Occupancy": 0.06999,
       "KS_all": 0.118,
-      "Sep_all": 0.08975,
+      "Sep_all": 0.04851,
       "AUC": 0.9999,
       "OOD_frac": 0.9878,
       "OOD_frac_gen": 0.9849,
@@ -897,7 +925,8 @@
       "AUC_err": 5.1639777949426535e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.001771346004220153,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.08975
     },
     "Pion_E50": {
       "n_showers": 999999,
@@ -912,7 +941,7 @@
       "KS_Occupancy": 0.2808,
       "Sep_Occupancy": 0.2291,
       "KS_all": 0.1897,
-      "Sep_all": 0.1774,
+      "Sep_all": 0.09782,
       "AUC": 0.9999,
       "OOD_frac": 0.9997,
       "OOD_frac_gen": 0.9994,
@@ -927,7 +956,8 @@
       "AUC_err": 5.4772255750510576e-05,
       "AUC_n": 6,
       "OOD_frac_err": 8.164965809276361e-05,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.1774
     },
     "Pion_E500": {
       "n_showers": 1000000,
@@ -942,7 +972,7 @@
       "KS_Occupancy": 0.3548,
       "Sep_Occupancy": 0.3133,
       "KS_all": 0.2486,
-      "Sep_all": 0.2396,
+      "Sep_all": 0.1372,
       "AUC": 1.0,
       "OOD_frac": 1.0,
       "OOD_frac_gen": 1.0,
@@ -957,7 +987,8 @@
       "AUC_err": 0.0,
       "AUC_n": 6,
       "OOD_frac_err": 0.0,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.2396
     },
     "Pion_LogUniform": {
       "n_showers": 309196,
@@ -972,7 +1003,7 @@
       "KS_Occupancy": 0.1179,
       "Sep_Occupancy": 0.05249,
       "KS_all": 0.1305,
-      "Sep_all": 0.09756,
+      "Sep_all": 0.05411,
       "AUC": 0.9992,
       "OOD_frac": 0.9779,
       "OOD_frac_gen": 0.9744,
@@ -988,7 +1019,8 @@
       "AUC_err": 0.00014719601443883404,
       "AUC_n": 6,
       "OOD_frac_err": 0.005486954224947278,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.09756
     }
   },
   "AllShowers": {
@@ -1005,7 +1037,7 @@
       "KS_Occupancy": 0.02075,
       "Sep_Occupancy": 0.001789,
       "KS_all": 0.01441,
-      "Sep_all": 0.002103,
+      "Sep_all": 0.0013,
       "AUC": 0.9103,
       "OOD_frac": 0.0637,
       "OOD_frac_gen": 0.1092,
@@ -1021,7 +1053,8 @@
       "AUC_err": 0.0009252026804976411,
       "AUC_n": 6,
       "OOD_frac_err": 0.008161964632774799,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002103
     },
     "Photon_E50": {
       "n_showers": 991030,
@@ -1036,7 +1069,7 @@
       "KS_Occupancy": 0.04965,
       "Sep_Occupancy": 0.008459,
       "KS_all": 0.02262,
-      "Sep_all": 0.00511,
+      "Sep_all": 0.003052,
       "AUC": 0.9954,
       "OOD_frac": 0.7194,
       "OOD_frac_gen": 0.759,
@@ -1052,7 +1085,8 @@
       "AUC_err": 0.00015055453054183896,
       "AUC_n": 6,
       "OOD_frac_err": 0.007701341874418168,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.00511
     },
     "Photon_E500": {
       "n_showers": 1000299,
@@ -1067,7 +1101,7 @@
       "KS_Occupancy": 0.1244,
       "Sep_Occupancy": 0.04754,
       "KS_all": 0.04577,
-      "Sep_all": 0.02098,
+      "Sep_all": 0.01133,
       "AUC": 1.0,
       "OOD_frac": 0.994,
       "OOD_frac_gen": 0.9923,
@@ -1082,7 +1116,8 @@
       "AUC_err": 4.0824829046381805e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.0009621157241552134,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.02098
     },
     "Photon_LogUniform": {
       "n_showers": 327037,
@@ -1097,7 +1132,7 @@
       "KS_Occupancy": 0.01579,
       "Sep_Occupancy": 0.002538,
       "KS_all": 0.01568,
-      "Sep_all": 0.002487,
+      "Sep_all": 0.001573,
       "AUC": 0.9304,
       "OOD_frac": 0.2751,
       "OOD_frac_gen": 0.3075,
@@ -1113,7 +1148,8 @@
       "AUC_err": 0.0004676180777799945,
       "AUC_n": 6,
       "OOD_frac_err": 0.015164355135206586,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002487
     },
     "Pion_E5": {
       "n_showers": 1000000,
@@ -1128,7 +1164,7 @@
       "KS_Occupancy": 0.0106,
       "Sep_Occupancy": 0.0009324,
       "KS_all": 0.01137,
-      "Sep_all": 0.0007616,
+      "Sep_all": 0.0004301,
       "AUC": 0.8497,
       "OOD_frac": 0.0181,
       "OOD_frac_gen": 0.0001,
@@ -1144,7 +1180,8 @@
       "AUC_err": 0.0008921883209278272,
       "AUC_n": 6,
       "OOD_frac_err": 0.0047852899598665915,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0007616
     },
     "Pion_E50": {
       "n_showers": 1000000,
@@ -1159,7 +1196,7 @@
       "KS_Occupancy": 0.01732,
       "Sep_Occupancy": 0.001482,
       "KS_all": 0.01168,
-      "Sep_all": 0.0008117,
+      "Sep_all": 0.0004381,
       "AUC": 0.8491,
       "OOD_frac": 0.0365,
       "OOD_frac_gen": 0.0516,
@@ -1175,7 +1212,8 @@
       "AUC_err": 0.0018522058920829247,
       "AUC_n": 6,
       "OOD_frac_err": 0.004447770977317364,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0008117
     },
     "Pion_E500": {
       "n_showers": 997608,
@@ -1190,7 +1228,7 @@
       "KS_Occupancy": 0.04631,
       "Sep_Occupancy": 0.008335,
       "KS_all": 0.01752,
-      "Sep_all": 0.002897,
+      "Sep_all": 0.001607,
       "AUC": 0.9798,
       "OOD_frac": 0.4296,
       "OOD_frac_gen": 0.4731,
@@ -1206,7 +1244,8 @@
       "AUC_err": 0.0004289522117905437,
       "AUC_n": 6,
       "OOD_frac_err": 0.01261126480572031,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.002897
     },
     "Pion_LogUniform": {
       "n_showers": 309196,
@@ -1221,7 +1260,7 @@
       "KS_Occupancy": 0.009333,
       "Sep_Occupancy": 0.0009474,
       "KS_all": 0.007979,
-      "Sep_all": 0.0006086,
+      "Sep_all": 0.0003436,
       "AUC": 0.7208,
       "OOD_frac": 0.0083,
       "OOD_frac_gen": 0.0165,
@@ -1237,7 +1276,8 @@
       "AUC_err": 0.0027542089003317464,
       "AUC_n": 6,
       "OOD_frac_err": 0.004798610910114162,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0006086
     }
   },
   "CaloDiT-2": {
@@ -1254,7 +1294,7 @@
       "KS_Occupancy": 0.1334,
       "Sep_Occupancy": 0.07089,
       "KS_all": 0.1025,
-      "Sep_all": 0.0826,
+      "Sep_all": 0.04229,
       "AUC": 0.9999,
       "OOD_frac": 0.9979,
       "OOD_frac_gen": 0.9976,
@@ -1269,7 +1309,8 @@
       "AUC_err": 5.1639777949426535e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.00041673332800087654,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.0826
     },
     "Photon_E50": {
       "n_showers": 1002000,
@@ -1284,7 +1325,7 @@
       "KS_Occupancy": 0.1514,
       "Sep_Occupancy": 0.07111,
       "KS_all": 0.134,
-      "Sep_all": 0.1336,
+      "Sep_all": 0.06904,
       "AUC": 0.9999,
       "OOD_frac": 0.9999,
       "OOD_frac_gen": 1.0,
@@ -1299,7 +1340,8 @@
       "AUC_err": 4.0824829046381805e-05,
       "AUC_n": 6,
       "OOD_frac_err": 0.00014719601443878124,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.1336
     },
     "Photon_E500": {
       "n_showers": 996000,
@@ -1314,7 +1356,7 @@
       "KS_Occupancy": 0.1446,
       "Sep_Occupancy": 0.05065,
       "KS_all": 0.183,
-      "Sep_all": 0.2081,
+      "Sep_all": 0.1088,
       "AUC": 1.0,
       "OOD_frac": 1.0,
       "OOD_frac_gen": 1.0,
@@ -1329,7 +1371,8 @@
       "AUC_err": 0.0,
       "AUC_n": 6,
       "OOD_frac_err": 0.0,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.2081
     },
     "Photon_LogUniform": {
       "n_showers": 315000,
@@ -1344,7 +1387,7 @@
       "KS_Occupancy": 0.04988,
       "Sep_Occupancy": 0.0108,
       "KS_all": 0.05224,
-      "Sep_all": 0.01298,
+      "Sep_all": 0.007078,
       "AUC": 0.9994,
       "OOD_frac": 0.9208,
       "OOD_frac_gen": 0.893,
@@ -1360,7 +1403,8 @@
       "AUC_err": 0.00011690451944502316,
       "AUC_n": 6,
       "OOD_frac_err": 0.004561030585295389,
-      "OOD_frac_n": 6
+      "OOD_frac_n": 6,
+      "Sep_all_buggy": 0.01298
     }
   },
   "Geant4": {
@@ -1377,7 +1421,7 @@
       "KS_Occupancy": 0.001497,
       "Sep_Occupancy": 2.703e-05,
       "KS_all": 0.001718,
-      "Sep_all": 0.0001256,
+      "Sep_all": 7.119e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1389,7 +1433,8 @@
       "FPD": 0.6032,
       "FPD_err": 0.1347,
       "KPD": -0.0014,
-      "KPD_err": 0.001
+      "KPD_err": 0.001,
+      "Sep_all_buggy": 0.0001256
     },
     "Photon_E50": {
       "n_showers": 101862,
@@ -1404,7 +1449,7 @@
       "KS_Occupancy": 0.00214,
       "Sep_Occupancy": 5.889e-05,
       "KS_all": 0.0022,
-      "Sep_all": 0.0001421,
+      "Sep_all": 8.023e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1416,7 +1461,8 @@
       "FPD": 0.28,
       "FPD_err": 0.024,
       "KPD": -0.0023,
-      "KPD_err": 0.0073
+      "KPD_err": 0.0073,
+      "Sep_all_buggy": 0.0001421
     },
     "Photon_E500": {
       "n_showers": 279491,
@@ -1431,7 +1477,7 @@
       "KS_Occupancy": 0.001711,
       "Sep_Occupancy": 2.529e-05,
       "KS_all": 0.00167,
-      "Sep_all": 5.059e-05,
+      "Sep_all": 2.841e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1443,7 +1489,8 @@
       "FPD": 0.0772,
       "FPD_err": 0.0466,
       "KPD": -0.0053,
-      "KPD_err": 0.0075
+      "KPD_err": 0.0075,
+      "Sep_all_buggy": 5.059e-05
     },
     "Photon_LogUniform": {
       "n_showers": 301467,
@@ -1458,7 +1505,7 @@
       "KS_Occupancy": 0.00171,
       "Sep_Occupancy": 6.012e-05,
       "KS_all": 0.001694,
-      "Sep_all": 0.0001187,
+      "Sep_all": 6.692e-05,
       "AUC": 0.4959,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1470,7 +1517,8 @@
       "FPD": 0.1592,
       "FPD_err": 0.0491,
       "KPD": -0.0025,
-      "KPD_err": 0.0056
+      "KPD_err": 0.0056,
+      "Sep_all_buggy": 0.0001187
     },
     "Pion_E5": {
       "n_showers": 100763,
@@ -1485,7 +1533,7 @@
       "KS_Occupancy": 0.001486,
       "Sep_Occupancy": 5.434e-05,
       "KS_all": 0.001641,
-      "Sep_all": 0.0001532,
+      "Sep_all": 9.284e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1497,7 +1545,8 @@
       "FPD": 0.8767,
       "FPD_err": 0.0425,
       "KPD": 0.0002,
-      "KPD_err": 0.0006
+      "KPD_err": 0.0006,
+      "Sep_all_buggy": 0.0001532
     },
     "Pion_E50": {
       "n_showers": 98072,
@@ -1512,7 +1561,7 @@
       "KS_Occupancy": 0.002003,
       "Sep_Occupancy": 7.978e-05,
       "KS_all": 0.002172,
-      "Sep_all": 0.0001633,
+      "Sep_all": 9.711e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1524,7 +1573,8 @@
       "FPD": 1.2221,
       "FPD_err": 0.0355,
       "KPD": 0.0002,
-      "KPD_err": 0.0008
+      "KPD_err": 0.0008,
+      "Sep_all_buggy": 0.0001633
     },
     "Pion_E500": {
       "n_showers": 286473,
@@ -1539,7 +1589,7 @@
       "KS_Occupancy": 0.001809,
       "Sep_Occupancy": 2.751e-05,
       "KS_all": 0.00157,
-      "Sep_all": 4.839e-05,
+      "Sep_all": 2.845e-05,
       "AUC": 0.5,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1551,7 +1601,8 @@
       "FPD": 0.2985,
       "FPD_err": 0.0544,
       "KPD": -0.0057,
-      "KPD_err": 0.0037
+      "KPD_err": 0.0037,
+      "Sep_all_buggy": 4.839e-05
     },
     "Pion_LogUniform": {
       "n_showers": 302618,
@@ -1566,7 +1617,7 @@
       "KS_Occupancy": 0.001179,
       "Sep_Occupancy": 6.988e-05,
       "KS_all": 0.001936,
-      "Sep_all": 0.0001235,
+      "Sep_all": 7.344e-05,
       "AUC": 0.4972,
       "OOD_frac": 0.0,
       "OOD_frac_gen": 0.0,
@@ -1578,7 +1629,8 @@
       "FPD": 0.8162,
       "FPD_err": 0.0834,
       "KPD": -0.0022,
-      "KPD_err": 0.002
+      "KPD_err": 0.002,
+      "Sep_all_buggy": 0.0001235
     }
   }
 }

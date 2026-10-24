@@ -38,6 +38,13 @@ MODEL_NAMES = [
     "AllShowers", 
     "CaloDiT-2"
 ]
+
+GEANT_BASELINE = {
+    "Photon": {5: 1/55.091, 50: 1/7.914, 500: 1/0.851},
+    "Pion": {5: 1/66.243, 50: 1/11.932, 500: 1/0.851},
+}
+
+
 class PlotProfiling:
     def __init__(self, results_path: str = "calodif_test", throughput=False, remove_first_batch=False):
         self.throughput = throughput
@@ -224,6 +231,22 @@ class PlotProfiling:
                     mpatches.Patch(color=color, label=label, ec='black') for label, color
                     in self.label_color_map[3:5]  # sample and post_process
                 ]
+                # GEANT4 baseline as horizontal reference line (stored as sec/event, inverted for throughput plots)
+                energy_gev = int(energy.replace("GeV", ""))
+                geant_baseline = GEANT_BASELINE.get(part_type, {}).get(energy_gev)
+                if geant_baseline is not None:
+                    baseline_value = 1.0 / geant_baseline if self.throughput else geant_baseline
+                    baseline_line = ax1.axhline(
+                        baseline_value,
+                        color="black",
+                        linestyle=":",
+                        linewidth=4,
+                    )
+                    baseline_line.set_label("GEANT4")
+                    sample_handles.append(baseline_line)
+                else:
+                    print(f"No GEANT4 baseline defined for {part_type} {energy_gev} GeV, skipping.")
+
                 ax1.legend(loc='upper right', handles=sample_handles)
 
                 # Set x-axis labels to show models
